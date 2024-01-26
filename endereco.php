@@ -73,7 +73,7 @@ if (isset($_REQUEST['metodo']) == 'BuscarCep') {
 										 '" . $endereco->localidade . "',
 										 '" . $endereco->uf . "'
 										)";
-		// die($SQL);
+		
 		$query = mysqli_query($Conexao, $SQL);
 		$id = mysqli_insert_id($Conexao);
 		if (!$query) {
@@ -88,7 +88,6 @@ if (isset($_REQUEST['metodo']) == 'BuscarCep') {
 		$sql = "SELECT * 
 						FROM endereco 
 						WHERE id = '" . $id . "'";
-		// die($sql);
 		$query = mysqli_query($Conexao, $sql);
 		if (mysqli_num_rows($query) > 0) {
 			while ($row = mysqli_fetch_array($query)) {
@@ -119,11 +118,6 @@ function get_cep($cep)
 	return $xml;
 }
 
-/*  echo '<pre>';
-
-
- // echo $endereco->logradouro; */
-
 
 ?>
 <html lang="pt-br">
@@ -152,7 +146,7 @@ function get_cep($cep)
 		<form action="">
 			<div class="row form-group">
 				<div class="col-sm-3">
-					<input type="text" class="form-control" placeholder="CEP" name="cep" id="cep" onfocus="limpa()" />
+					<input type="text" class="form-control" placeholder="CEP" name="cep" id="cep" onfocus="limparCampos()" />
 				</div>
 				<div class="col-sm-9">
 					<input type="text" class="form-control" placeholder="Endereço" readonly id="endereco" />
@@ -179,57 +173,12 @@ function get_cep($cep)
 		</form>
 	</div>
 	<script>
-		function limpa() {
-			// $("#cep").val("");
+		function limparCampos() {
 			$("#endereco").val("");
 			$("#bairro").val("");
 			$("#cidade").val("");
 			$("#uf").val("");
 		}
-		/* function getDadosCep()
-		{
-
-			console.log(document.querySelector('#cep').value)
-		   
-				var cep = document.querySelector('#cep').value;
-				
-				let url = 'https://viacep.com.br/ws/'+cep+'/json/unicode/';
-				
-				let xmlHttp = new XMLHttpRequest();
-				xmlHttp.open('GET',url);
-
-				xmlHttp.onreadystatechange = () => 
-				{
-					if(xmlHttp.readyState == 4 && xmlHttp.status == 200)
-					{
-						let dadosJSONText = xmlHttp.responseText;
-						let dadosJSONObj = JSON.parse(dadosJSONText)
-
-						if(xmlHttp.responseText == "")
-						{
-							return alert('Cep não encontrado!');
-							document.getElementById('endereco').value = "";
-							document.getElementById('bairro').value = "";
-							document.getElementById('cidade').value = "";
-							document.getElementById('uf').value = "";
-							return false;
-						}
-						else
-						{
-							document.getElementById('endereco').value = dadosJSONObj.logradouro
-							document.getElementById('bairro').value = dadosJSONObj.bairro
-							document.getElementById('cidade').value = dadosJSONObj.localidade
-							document.getElementById('uf').value = dadosJSONObj.uf
-						}
-
-						
-
-						
-					}
-					
-				}
-				xmlHttp.send()
-		} */
 
 		function BuscarCep() {
 			if ($('#cep').val() == "") {
